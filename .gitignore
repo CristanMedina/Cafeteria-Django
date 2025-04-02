@@ -1,0 +1,59 @@
+# Byte-compiled / optimized / DLL files
+_pycache_/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+
+# Django-specific files
+*.log
+*.pot
+*.pyc
+*.pyo
+*.sqlite3
+db.sqlite3
+media/
+staticfiles/
+local_settings.py
+
+# Ignore environment variables
+.env
+*.env
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore node_modules if using frontend with Django
+node_modules/
+
+# Ignore compiled and cached files
+*.mo
+*.swp
+*.swo
+
+# Ignore migrations cache (optional)
+/migrations/.pyc
+/migrations/.pyo
+/migrations/.py, !*/migrations/_init_.py
+
+# Ignore coverage and testing reports
+htmlcov/
+.coverage
+coverage.xml
+*.cover
+nosetests.xml
+pytest_cache/
+junit.xml
+
+# Ignore Docker files
+*.pid
+celerybeat-schedule
+
+# Ignore system files
+.DS_Store
+Thumbs.db
