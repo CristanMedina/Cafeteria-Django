@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Cafetería Escolar{% endblock %}</title>
 
-
     <style>
         body {
             margin: 0;
@@ -16,14 +15,14 @@
             background-position: center;
             font-family: Arial, sans-serif;
         }
-    
+
         nav.navbar {
             background-color: rgba(30, 144, 255, 0.3);
             backdrop-filter: blur(15px);
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
         }
-    
+
         .navbar-nav .nav-link,
         .navbar-nav .btn-link {
             transition: background-color 0.3s, color 0.3s;
@@ -31,7 +30,7 @@
             padding: 6px 12px;
             display: inline-block;
         }
-    
+
         .navbar-nav .nav-link:hover,
         .navbar-nav .btn-link:hover {
             background-color: rgba(0, 191, 255, 0.4);
@@ -40,7 +39,7 @@
     </style>
 </head>
 <body>
-  
+
     {% include 'users/navbar.html' %}
 
 
