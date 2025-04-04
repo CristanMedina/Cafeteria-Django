@@ -3,6 +3,17 @@
 {% block content %}
 <h2>Mis Pedidos</h2>
 
+<!-- Mostrar mensajes de éxito/error -->
+{% if messages %}
+    <div class="alert alert-dismissible fade show" role="alert">
+        {% for message in messages %}
+            <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
 {% if orders %}
 <table class="table">
     <thead>
@@ -13,6 +24,7 @@
             <th>Total</th>
             <th>Estado</th>
             <th>Fecha</th>
+            <th>Acción</th>
         </tr>
     </thead>
     <tbody>
@@ -24,10 +36,20 @@
             <td>${{ order.total_price }}</td>
             <td>{{ order.get_status_display }}</td>
             <td>{{ order.created_at|date:"SHORT_DATETIME_FORMAT" }}</td>
+            <td>
+                {% if order.status == "P" %}
+                    <form action="{% url 'orders:cancel_order' order.pk %}" method="post" onsubmit="return confirmCancel();">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Cancelar</button>
+                    </form>
+                {% else %}
+                    <span class="text-muted">No disponible</span>
+                {% endif %}
+            </td>
         </tr>
         {% if order.special_requests %}
         <tr>
-            <td colspan="6">
+            <td colspan="7">
                 <strong>Notas:</strong> {{ order.special_requests }}
             </td>
         </tr>
@@ -40,4 +62,12 @@
 {% endif %}
 
 <a href="{% url 'menu:menu_list' %}" class="btn btn-primary">Hacer otro pedido</a>
+
+
+<script>
+    function confirmCancel() {
+        return confirm("¿Estás seguro de que quieres cancelar este pedido?");
+    }
+</script>
+
 {% endblock %}
