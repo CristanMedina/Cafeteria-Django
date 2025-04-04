@@ -15,6 +15,9 @@
         {% for platillo in platillos %}
         <div class="col">
             <div class="card h-100 shadow-sm">
+                {% if platillo.imagen %}
+                <img src="{{ platillo.imagen.url}}" class="card-img-top" alt="{{ platillo.nombre }}">
+                {% endif %}
                 <div class="card-body">
                     <h5 class="card-title">{{ platillo.nombre }}</h5>
                     <p class="card-text text-muted">{{ platillo.descripcion }}</p>
