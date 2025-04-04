@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="my-4">Panel de Cocina</h1>
+
+    <div class="list-group">
+        {% for order in orders %}
+        <div class="list-group-item mb-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h5>Pedido #{{ order.id }}</h5>
+                    <p class="mb-1"><strong>Platillo:</strong> {{ order.platillo.nombre }}</p>
+                    <p class="mb-1"><strong>Cantidad:</strong> {{ order.quantity }}</p>
+                    <p class="mb-1"><strong>Cliente:</strong> {{ order.client.username }}</p>
+                    <p class="mb-1"><strong>Para:</strong> {{ order.pickup_name }}</p>
+                    {% if order.special_requests %}
+                    <p class="mb-1"><strong>Notas:</strong> {{ order.special_requests }}</p>
+                    {% endif %}
+                </div>
+                <div class="text-end">
+                    <span class="badge
+                        {% if order.status == 'P' %}bg-secondary
+                        {% elif order.status == 'EP' %}bg-warning text-dark
+                        {% elif order.status == 'T' %}bg-info text-dark
+                        {% else %}bg-success
+                        {% endif %}">
+                        {{ order.get_status_display }}
+                    </span>
+                    <a href="{% url 'kitchen_orders:update_status' order.pk %}"
+                       class="btn btn-sm btn-outline-primary mt-2">
+                        Cambiar Estado
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

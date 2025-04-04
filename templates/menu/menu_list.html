@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Menú del Comedor Escolar</h1>
+        {% if user.role == 'COCINERO' %}
+        <a href="{% url 'menu:menu_create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Agregar Platillo
+        </a>
+        {% endif %}
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for platillo in platillos %}
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ platillo.nombre }}</h5>
+                    <p class="card-text text-muted">{{ platillo.descripcion }}</p>
+                    <div class="mb-3">
+                        <span class="badge bg-success fs-6">${{ platillo.precio }}</span>
+                    </div>
+                    <p class="card-text"><small class="text-muted">{{ platillo.ingredientes }}</small></p>
+
+                    {% if user.role == 'CLIENTE' %}
+                        <a href="{% url 'orders:create_order_with_dish' platillo.id %}"
+                        class="btn btn-primary w-100 mt-2">
+                            <i class="bi bi-cart-plus"></i> Ordenar
+                        </a>
+                     {% endif %}
+
+                    {% if user.role == 'COCINERO' %}
+                    <div class="btn-group w-100 mt-2">
+                        <a href="{% url 'menu:menu_edit' platillo.pk %}" class="btn btn-outline-primary">
+                            <i class="bi bi-pencil"></i> Editar
+                        </a>
+                        <a href="{% url 'menu:menu_delete' platillo.pk %}" class="btn btn-outline-danger">
+                            <i class="bi bi-trash"></i> Eliminar
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

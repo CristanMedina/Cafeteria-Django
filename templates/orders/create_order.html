@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">
+                        <i class="bi bi-cart-check"></i>
+                        {% if platillo %}Ordenar: {{ platillo.nombre }}{% else %}Nuevo Pedido{% endif %}
+                    </h2>
+                </div>
+                <div class="card-body">
+                    {% if platillo %}
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-8">
+                            <h4>{{ platillo.nombre }}</h4>
+                            <p class="text-muted">{{ platillo.descripcion }}</p>
+                            <h5 class="text-success">${{ platillo.precio }}</h5>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        {% if not platillo %}
+                        <div class="mb-3">
+                            <label class="form-label">Comida</label>
+                            {{ form.platillo }}
+                        </div>
+                        {% else %}
+                        <input type="hidden" name="platillo" value="{{ platillo.id }}">
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label class="form-label">Cantidad</label>
+                            {{ form.quantity }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Nombre para recoger</label>
+                            {{ form.pickup_name }}
+                            <small class="text-muted">Ej: Carlos</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Instrucciones especiales</label>
+                            {{ form.special_requests }}
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% if platillo %}{% url 'menu:menu_list' %}{% else %}{% url 'orders:order_list' %}{% endif %}"
+                               class="btn btn-secondary me-md-2">
+                                <i class="bi bi-arrow-left"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle"></i> Confirmar Pedido
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

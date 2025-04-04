@@ -1,15 +1,18 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from .models import Cliente
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from .models import User
 
-class ClienteRegistrationForm(UserCreationForm):
+class UserRegisterForm(UserCreationForm):
     class Meta:
-        model = Cliente
-        fields = ['username', 'email', 'password1', 'password2']
+        model = User
+        fields = ['username', 'email', 'password1', 'password2', 'role']
 
-    def save(self, commit=True):
-        cliente = super().save(commit=False)
-        cliente.role = Cliente.base_role
-        if commit:
-            cliente.save()
-        return cliente
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['role'].choices = [
+            ('CLIENTE', 'Cliente'),
+            ('COCINERO', 'Cocinero')
+        ]
+
+class UserLoginForm(AuthenticationForm):
+    pass

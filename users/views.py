@@ -1,14 +1,12 @@
-from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView
 from django.contrib.auth import login
-from .models import Cliente
-from .forms import ClienteRegistrationForm
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
+from .forms import UserRegisterForm
 
-class ClienteRegisterView(CreateView):
-    model = Cliente
-    form_class = ClienteRegistrationForm
-    template_name = "users/register_cliente.html"
-    success_url = reverse_lazy("home")
+class RegisterView(CreateView):
+    form_class = UserRegisterForm
+    template_name = 'users/register.html'
+    success_url = reverse_lazy('home')
 
     def form_valid(self, form):
         response = super().form_valid(form)
