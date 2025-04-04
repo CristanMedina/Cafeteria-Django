@@ -1,13 +1,16 @@
-{% extends "base.html" %}
 
+
+{% extends "base.html" %}
+{% load static %}
 {% block content %}
 <h2>Login</h2>
 {% if form.errors %}
+
     <div class="alert alert-danger">
         Invalid username or password
     </div>
 {% endif %}
-
+<link rel="stylesheet" href="{% static 'users/css/loginstyles.css' %}">
 <form method="post">
     {% csrf_token %}
     <div class="form-group">

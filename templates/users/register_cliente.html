@@ -1,6 +1,8 @@
+{%load static%}
 {% extends "base.html" %}
 
 {% block content %}
+<link rel="stylesheet" href="{% static 'users/css/loginstyles.css' %}">
 <h2>Register</h2>
 <form method="post">
     {% csrf_token %}

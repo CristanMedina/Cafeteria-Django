@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafetería Escolar</title>
+    <style>
+        /* Estilos generales */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        /* Contenedor del menú */
+        .navbar {
+            background-color: #1e90ff;
+            padding: 10px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Logo del menú */
+        .navbar .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        .navbar .navbar-brand:hover{
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: rgba(202, 246, 241, 0.93);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .navbar-brand i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+      
+
+        /* Contenedor de los botones del menú */
+        .navbar-nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Elementos del menú */
+        .navbar-nav .nav-item {
+            list-style: none;
+        }
+
+        .navbar-nav .nav-item a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.1rem;
+            padding: 8px 16px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+        .navbar-nav .nav-item a:hover {
+            text-decoration: none;
+            color: rgba(202, 246, 241, 0.93);
+            font-size: 1.1rem;
+            padding: 8px 16px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Íconos de los botones */
+        .navbar-nav .nav-item a i {
+            margin-right: 8px;
+        }
+
+        /* Estilo para los botones de sesión */
+        .navbar-nav .nav-item form button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        /* Estilos cuando la página se ve en dispositivos móviles */
+        @media (max-width: 768px) {
+            .navbar-nav {
+                display: block;
+                width: 100%;
+                text-align: center;
+            }
+
+            .navbar-nav .nav-item {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Barra de navegación -->
+    <nav class="navbar">
+        <!-- Logo y nombre -->
+        <a href="{% url 'menu:menu_list' %}" class="navbar-brand">
+            <i class="bi bi-cup-hot"></i> Cafetería Escolar
+        </a>
+
+        <!-- Menú de navegación -->
+        <div class="navbar-nav">
+            <div class="nav-item">
+                <a href="{% url 'menu:menu_list' %}">
+                    <i class="bi bi-menu-button-wide"></i> Menú
+                </a>
+            </div>
+
+            {% if user.is_authenticated %}
+            <div class="nav-item">
+                <a href="{% url 'orders:order_list' %}">
+                    <i class="bi bi-list-check"></i> Mis Pedidos
+                </a>
+            </div>
+            {% if user.role == 'COCINERO' %}
+            <div class="nav-item">
+                <a href="{% url 'kitchen_orders:kitchen_dashboard' %}">
+                    <i class="bi bi-speedometer2"></i> Cocina
+                </a>
+            </div>
+            {% endif %}
+            {% endif %}
+
+            <!-- Botón de iniciar sesión o cerrar sesión -->
+            <div class="nav-item">
+                {% if user.is_authenticated %}
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">
+                        <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                    </button>
+                </form>
+                {% else %}
+                <a href="{% url 'login' %}">
+                    <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+</body>
+</html>

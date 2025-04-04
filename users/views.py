@@ -2,6 +2,7 @@ from django.contrib.auth import login
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from .forms import UserRegisterForm
+from django.contrib.auth import login
 
 class RegisterView(CreateView):
     form_class = UserRegisterForm
