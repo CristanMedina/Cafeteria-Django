@@ -11,35 +11,37 @@
         {% endif %}
     </div>
 
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4">
         {% for platillo in platillos %}
         <div class="col">
-            <div class="card h-100 shadow-sm">
+            <div class="card h-100 shadow p-3" style="border-radius: 15px; border: none; background-color: #f4f4f4;">
                 {% if platillo.imagen %}
-                <img src="{{ platillo.imagen.url}}" class="card-img-top" alt="{{ platillo.nombre }}">
+                <img src="{{ platillo.imagen.url }}" class="card-img-top"
+                     style="width: 100%; height: 200px; object-fit: cover; border-radius: 15px;"
+                     alt="{{ platillo.nombre }}">
                 {% endif %}
-                <div class="card-body">
-                    <h5 class="card-title">{{ platillo.nombre }}</h5>
-                    <p class="card-text text-muted">{{ platillo.descripcion }}</p>
-                    <div class="mb-3">
-                        <span class="badge bg-success fs-6">${{ platillo.precio }}</span>
+                <div class="card-body p-3">
+                    <h5 class="card-title mb-2" style="font-size: 1.1rem;">{{ platillo.nombre }}</h5>
+                    <p class="card-text text-muted mb-2" style="font-size: 0.9rem;">{{ platillo.descripcion|truncatechars:60 }}</p>
+                    <div class="mb-2">
+                        <span class="badge bg-success" style="font-size: 0.85rem;">${{ platillo.precio }}</span>
                     </div>
-                    <p class="card-text"><small class="text-muted">{{ platillo.ingredientes }}</small></p>
+                    <p class="card-text mb-3"><small class="text-muted">{{ platillo.ingredientes|truncatechars:40 }}</small></p>
 
                     {% if user.role == 'CLIENTE' %}
-                        <a href="{% url 'orders:create_order_with_dish' platillo.id %}"
-                        class="btn btn-primary w-100 mt-2">
-                            <i class="bi bi-cart-plus"></i> Ordenar
-                        </a>
-                     {% endif %}
+                    <a href="{% url 'orders:create_order_with_dish' platillo.id %}"
+                       class="btn btn-primary w-100 mt-auto" style="font-size: 0.9rem;">
+                        <i class="bi bi-cart-plus"></i> Ordenar
+                    </a>
+                    {% endif %}
 
                     {% if user.role == 'COCINERO' %}
                     <div class="btn-group w-100 mt-2">
-                        <a href="{% url 'menu:menu_edit' platillo.pk %}" class="btn btn-outline-primary">
-                            <i class="bi bi-pencil"></i> Editar
+                        <a href="{% url 'menu:menu_edit' platillo.pk %}" class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-pencil"></i>
                         </a>
-                        <a href="{% url 'menu:menu_delete' platillo.pk %}" class="btn btn-outline-danger">
-                            <i class="bi bi-trash"></i> Eliminar
+                        <a href="{% url 'menu:menu_delete' platillo.pk %}" class="btn btn-outline-danger btn-sm">
+                            <i class="bi bi-trash"></i>
                         </a>
                     </div>
                     {% endif %}

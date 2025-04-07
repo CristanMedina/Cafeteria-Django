@@ -43,7 +43,10 @@
                         <button type="submit" class="btn btn-danger btn-sm">Cancelar</button>
                     </form>
                 {% else %}
-                    <span class="text-muted">No disponible</span>
+                <form action="{% url 'orders:cancel_order' order.pk %}" method="post" onsubmit="return confirmCancel();">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-secondary disabled btn-sm">Cancelar</button>
+                </form>
                 {% endif %}
             </td>
         </tr>
